@@ -27,3 +27,9 @@ export class Category extends Entity {
     super(data);
   }
 }
+
+export interface CategoryRelations {
+  // describe navigational properties here
+}
+
+export type CategoryWithRelations = Category & CategoryRelations;

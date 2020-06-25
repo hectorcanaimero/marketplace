@@ -17,12 +17,12 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {Category} from '../models';
-import {ShopRepository} from '../repositories';
+import {CategoryRepository} from '../repositories';
 
 export class CategoryController {
   constructor(
-    @repository(ShopRepository)
-    public shopRepository : ShopRepository,
+    @repository(CategoryRepository)
+    public categoryRepository : CategoryRepository,
   ) {}
 
   @post('/categories', {
@@ -46,7 +46,7 @@ export class CategoryController {
     })
     category: Omit<Category, 'id'>,
   ): Promise<Category> {
-    return this.shopRepository.create(category);
+    return this.categoryRepository.create(category);
   }
 
   @get('/categories/count', {
@@ -60,7 +60,7 @@ export class CategoryController {
   async count(
     @param.where(Category) where?: Where<Category>,
   ): Promise<Count> {
-    return this.shopRepository.count(where);
+    return this.categoryRepository.count(where);
   }
 
   @get('/categories', {
@@ -81,7 +81,7 @@ export class CategoryController {
   async find(
     @param.filter(Category) filter?: Filter<Category>,
   ): Promise<Category[]> {
-    return this.shopRepository.find(filter);
+    return this.categoryRepository.find(filter);
   }
 
   @patch('/categories', {
@@ -103,7 +103,7 @@ export class CategoryController {
     category: Category,
     @param.where(Category) where?: Where<Category>,
   ): Promise<Count> {
-    return this.shopRepository.updateAll(category, where);
+    return this.categoryRepository.updateAll(category, where);
   }
 
   @get('/categories/{id}', {
@@ -122,7 +122,7 @@ export class CategoryController {
     @param.path.string('id') id: string,
     @param.filter(Category, {exclude: 'where'}) filter?: FilterExcludingWhere<Category>
   ): Promise<Category> {
-    return this.shopRepository.findById(id, filter);
+    return this.categoryRepository.findById(id, filter);
   }
 
   @patch('/categories/{id}', {
@@ -143,7 +143,7 @@ export class CategoryController {
     })
     category: Category,
   ): Promise<void> {
-    await this.shopRepository.updateById(id, category);
+    await this.categoryRepository.updateById(id, category);
   }
 
   @put('/categories/{id}', {
@@ -157,7 +157,7 @@ export class CategoryController {
     @param.path.string('id') id: string,
     @requestBody() category: Category,
   ): Promise<void> {
-    await this.shopRepository.replaceById(id, category);
+    await this.categoryRepository.replaceById(id, category);
   }
 
   @del('/categories/{id}', {
@@ -168,6 +168,6 @@ export class CategoryController {
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.shopRepository.deleteById(id);
+    await this.categoryRepository.deleteById(id);
   }
 }

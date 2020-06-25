@@ -39,16 +39,6 @@ export class Order extends Entity {
   })
   items?: object;
 
-  @property({
-    type: 'string',
-  })
-  shopId?: string;
-
-  @property({
-    type: 'string',
-  })
-  customerId?: string;
-
   constructor(data?: Partial<Order>) {
     super(data);
   }

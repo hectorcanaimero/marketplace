@@ -1,22 +1,16 @@
-import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
-import {Product, ProductRelations, Category} from '../models';
+import {DefaultCrudRepository} from '@loopback/repository';
+import {Product, ProductRelations} from '../models';
 import {MangitoDataSource} from '../datasources';
-import {inject, Getter} from '@loopback/core';
-import {CategoryRepository} from './category.repository';
+import {inject} from '@loopback/core';
 
 export class ProductRepository extends DefaultCrudRepository<
   Product,
   typeof Product.prototype.id,
   ProductRelations
 > {
-
-  public readonly category: BelongsToAccessor<Category, typeof Product.prototype.id>;
-
   constructor(
-    @inject('datasources.mangito') dataSource: MangitoDataSource, @repository.getter('CategoryRepository') protected categoryRepositoryGetter: Getter<CategoryRepository>,
+    @inject('datasources.mangito') dataSource: MangitoDataSource,
   ) {
     super(Product, dataSource);
-    this.category = this.createBelongsToAccessorFor('category', categoryRepositoryGetter,);
-    this.registerInclusionResolver('category', this.category.inclusionResolver);
   }
 }
